@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation That Developers Love | Nichole Higgins</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.7;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 64, 175, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 20%);
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #38bdf8;
+        }
+        
+        header:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.03) 50%),
+                linear-gradient(transparent 50%, rgba(0,0,0,0.1) 50%);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .article-header {
+            padding: 3rem 0 2rem;
+        }
+        
+        .article-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, #93c5fd, #dbeafe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .article-subtitle {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+            color: #bfdbfe;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 1.8rem;
+            font-size: 1.1rem;
+            flex-wrap: wrap;
+            color: #93c5fd;
+        }
+        
+        .article-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: rgba(56, 189, 248, 0.25);
+            color: #dbeafe;
+            padding: 7px 18px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid rgba(125, 211, 252, 0.5);
+            backdrop-filter: blur(2px);
+        }
+        
+        .article-content {
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 16px;
+            margin: 3rem auto;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            border: 1px solid #1e40af;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .content-wrap {
+            padding: 3.5rem;
+        }
+        
+        .article-content h2 {
+            color: #93c5fd;
+            margin: 2.5rem 0 1.3rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+            font-size: 1.9rem;
+        }
+        
+        .article-content h3 {
+            color: #60a5fa;
+            margin: 2.2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.13rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+        
+        .article-content blockquote {
+            background: rgba(30, 64, 175, 0.3);
+            border-left: 4px solid #3b82f6;
+            padding: 1.8rem;
+            margin: 2.3rem 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            font-style: italic;
+            font-size: 1.25rem;
+            color: #dbeafe;
+        }
+        
+        .article-content blockquote:before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            font-size: 5rem;
+            color: rgba(59, 130, 246, 0.25);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .pattern {
+            background: rgba(30, 58, 138, 0.4);
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 2.3rem 0;
+            border-left: 4px solid #60a5fa;
+            position: relative;
+        }
+        
+        .pattern h4 {
+            color: #bfdbfe;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .pattern h4 i {
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin: 1.7rem 0;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .case-study {
+            background: rgba(30, 64, 175, 0.3);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2.8rem 0;
+            border: 1px dashed #3b82f6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .case-study:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.03) 50%),
+                linear-gradient(transparent 50%, rgba(0,0,0,0.1) 50%);
+            background-size: 20px 20px;
+            opacity: 0.2;
+        }
+        
+        .case-study h4 {
+            color: #bfdbfe;
+            margin-bottom: 1.2rem;
+            font-size: 1.35rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .case-study h4 i {
+            color: #93c5fd;
+        }
+        
+        .dev-tip {
+            background: rgba(37, 99, 235, 0.2);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.8rem 0;
+            position: relative;
+            border-left: 4px solid #60a5fa;
+        }
+        
+        .dev-tip h5 {
+            color: #dbeafe;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .code-block {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.8rem;
+            border-radius: 8px;
+            margin: 2.3rem 0;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            border: 1px solid #334155;
+            position: relative;
+        }
+        
+        .code-block .lang {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #3b82f6;
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            border-radius: 0 0 0 5px;
+        }
+        
+        .code-comment {
+            color: #94a3b8;
+        }
+        
+        .code-keyword {
+            color: #f472b6;
+        }
+        
+        .code-function {
+            color: #93c5fd;
+        }
+        
+        .code-string {
+            color: #86efac;
+        }
+        
+        .code-number {
+            color: #fbbf24;
+        }
+        
+        .interactive-demo {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            background: rgba(30, 64, 175, 0.3);
+            padding: 5px;
+            border-radius: 8px;
+        }
+        
+        .tab {
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: #3b82f6;
+        }
+        
+        .demo-content {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .request-block {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: monospace;
+            position: relative;
+        }
+        
+        .request-block .method {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #3b82f6;
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.9rem;
+            border-radius: 0 0 5px 0;
+        }
+        
+        .response-block {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: monospace;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .response-block .status {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #10b981;
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.9rem;
+            border-radius: 0 0 5px 0;
+        }
+        
+        .run-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+        
+        .run-button:hover {
+            background: #2563eb;
+        }
+        
+        .references {
+            background: rgba(30, 64, 175, 0.3);
+            padding: 2.2rem;
+            border-radius: 12px;
+            margin: 3.5rem 0 1.5rem;
+            border: 1px solid #3b82f6;
+        }
+        
+        .references h3 {
+            color: #bfdbfe;
+            margin-top: 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #60a5fa;
+            font-size: 1.5rem;
+        }
+        
+        .references ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .references li {
+            margin-bottom: 1.1rem;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+        
+        .references li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #93c5fd;
+            font-weight: bold;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        
+        .article-footer {
+            text-align: center;
+            padding: 2.5rem 0;
+        }
+        
+        .back-button {
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            background: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(59, 130, 246, 0.6);
+        }
+        
+        .back-button i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            background: #0f172a;
+            color: #93c5fd;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid #1e40af;
+            position: relative;
+        }
+        
+        footer:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.02) 50%),
+                linear-gradient(transparent 50%, rgba(0,0,0,0.1) 50%);
+            background-size: 30px 30px;
+            opacity: 0.3;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-content p {
+            margin: 1.2rem 0;
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrap {
+                padding: 2rem;
+            }
+            
+            .article-header h1 {
+                font-size: 2.1rem;
+            }
+            
+            .article-subtitle {
+                font-size: 1.15rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .interactive-demo {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Animation for terminal */
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background: #3b82f6;
+            vertical-align: middle;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="article-header">
+                <h1>API Documentation That Developers Love</h1>
+                <p class="article-subtitle">Patterns for creating intuitive technical guides with interactive examples</p>
+                <div class="article-tags">
+                    <span class="tag">API Design</span>
+                    <span class="tag">Developer Experience</span>
+                    <span class="tag">Technical Writing</span>
+                    <span class="tag">Developer Tools</span>
+                </div>
+                <div class="article-meta">
+                    <span><i class="far fa-calendar"></i> Published: January 15, 2023</span>
+                    <span><i class="fas fa-user"></i> Author: Nichole Higgins</span>
+                    <span><i class="far fa-clock"></i> Reading Time: 14 min</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="article-content">
+            <div class="content-wrap">
+                <p>I'll never forget the moment I realized how bad API docs could be. I was a junior developer, staring at a wall of PDF documentation for a payment API at 2 AM. I had three endpoints to integrate, and I'd been stuck on the same error for six hours. The docs had plenty of words, but none of them told me what I needed to know. That experience shaped my entire approach to documentation.</p>
+                
+                <p>Great API documentation isn't just a technical requirement—it's an act of empathy. It's about understanding what developers go through when they're trying to make your API work. After years of writing docs and watching developers use them, I've discovered what separates forgettable docs from documentation that developers genuinely love.</p>
+
+                <h2>The Developer Experience Mindset</h2>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-heart"></i> Treat Docs Like Product Design</h4>
+                    <p>Your documentation is your API's UI. Developers form their first impression of your API through your docs. Approach documentation with the same care you'd give to UI design:</p>
+                    <ul>
+                        <li><strong>User journeys:</strong> Map out how developers will use your docs</li>
+                        <li><strong>Progressive disclosure:</strong> Reveal complexity gradually</li>
+                        <li><strong>Accessibility:</strong> Make docs usable for everyone</li>
+                        <li><strong>Feedback loops:</strong> Create ways for developers to report issues</li>
+                    </ul>
+                </div>
+                
+                <div class="dev-tip">
+                    <h5>Pro Tip:</h5>
+                    <p>"Spend a day each month watching developers use your documentation. You'll learn more in those sessions than from any analytics dashboard." - Marcus Tan, Stripe Docs Team</p>
+                </div>
+
+                <h2>Patterns That Make Developers Smile</h2>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-bolt"></i> 1. The Quickstart That Actually Works</h4>
+                    <p>Every API doc has a "Getting Started" section. The difference is whether it actually gets developers started. A great quickstart:</p>
+                    <ul>
+                        <li>Works in under 5 minutes</li>
+                        <li>Requires minimal configuration</li>
+                        <li>Provides immediate, visible results</li>
+                        <li>Has a "next steps" section that naturally extends the learning</li>
+                    </ul>
+                    
+                    <div class="code-block">
+                        <div class="lang">JavaScript</div>
+                        <pre><span class="code-comment">// Install the SDK</span>
+<span class="code-keyword">npm</span> install awesome-api-sdk
+
+<span class="code-comment">// The simplest working example</span>
+<span class="code-keyword">import</span> { AwesomeAPI } <span class="code-keyword">from</span> <span class="code-string">'awesome-api-sdk'</span>;
+
+<span class="code-keyword">const</span> api = <span class="code-keyword">new</span> <span class="code-function">AwesomeAPI</span>(<span class="code-string">'your_api_key'</span>);
+
+<span class="code-comment">// Make your first API call</span>
+<span class="code-keyword">const</span> result = <span class="code-keyword">await</span> api.<span class="code-function">getUser</span>(<span class="code-string">'me'</span>);
+
+<span class="code-function">console</span>.log(result); <span class="code-comment">// => { name: 'Nichole', id: 'dev_123' }</span></pre>
+                    </div>
+                </div>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-cube"></i> 2. The Interactive Playground</h4>
+                    <p>Static examples are good. Runnnable examples are better. The best docs let developers experiment right in the browser:</p>
+                    
+                    <div class="interactive-demo">
+                        <div class="demo-header">
+                            <h4>Try the API</h4>
+                            <div class="tabs">
+                                <div class="tab active">GET /user</div>
+                                <div class="tab">POST /user</div>
+                                <div class="tab">GET /posts</div>
+                            </div>
+                        </div>
+                        <div class="demo-content">
+                            <div class="request-block">
+                                <div class="method">GET</div>
+                                <pre>https://api.example.com/v1/user/{id}</pre>
+                            </div>
+                            <div class="request-block">
+                                <div class="method">Params</div>
+                                <pre>id: "me"</pre>
+                            </div>
+                            <button class="run-button">Run Request</button>
+                            <div class="response-block">
+                                <div class="status">200 OK</div>
+                                <pre>{
+  "id": "user_123",
+  "name": "Nichole Higgins",
+  "email": "nichole@example.com",
+  "created_at": "2023-01-15T10:30:00Z"
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>Tools like Swagger UI or Postman Collections can help create these interactive experiences without building custom solutions.</p>
+                </div>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-book"></i> 3. The Human Error Guide</h4>
+                    <p>Documentation should anticipate where developers will struggle. The best docs include:</p>
+                    <ul>
+                        <li><strong>Common errors:</strong> With explanations and solutions</li>
+                        <li><strong>Troubleshooting flows:</strong> "If you see X, try Y"</li>
+                        <li><strong>Gotchas:</strong> Platform-specific quirks and limitations</li>
+                        <li><strong>Rate limiting examples:</strong> Show what hitting limits looks like</li>
+                    </ul>
+                    
+                    <div class="dev-tip">
+                        <h5>Real Talk:</h5>
+                        <p>"We added a 'Common Mistakes' section that cut support requests by 40%. Turns out developers kept making the same three errors." - Jamal Chen, API Docs Lead</p>
+                    </div>
+                </div>
+                
+                <h2>Case Study: The Stripe Effect</h2>
+                
+                <div class="case-study">
+                    <h4><i class="fas fa-star"></i> How Stripe Changed API Documentation Forever</h4>
+                    <p>Stripe's documentation is legendary in developer circles. What makes it special?</p>
+                    
+                    <ul>
+                        <li><strong>Right-side code samples:</strong> Contextual examples that match the content</li>
+                        <li><strong>API explorer:</strong> Try any endpoint without leaving the docs</li>
+                        <li><strong>Error dictionary:</strong> Every possible error explained</li>
+                        <li><strong>Guided tutorials:</strong> That solve real business problems</li>
+                        <li><strong>Dark mode:</strong> Because developers work at night</li>
+                    </ul>
+                    
+                    <p>The result? Developers consistently rate Stripe's documentation as the gold standard. Their secret? Treating docs as a core product feature, not an afterthought.</p>
+                </div>
+                
+                <blockquote>
+                    "Great documentation doesn't just explain your API—it teaches developers how to think about the problem domain your API solves."
+                </blockquote>
+                
+                <h2>Beyond the Basics: Advanced Patterns</h2>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-robot"></i> 1. The AI-Powered Assistant</h4>
+                    <p>Forward-thinking documentation now includes:</p>
+                    <ul>
+                        <li>Chat interfaces that answer questions about the API</li>
+                        <li>Error message search that suggests solutions</li>
+                        <li>Code generation based on natural language descriptions</li>
+                        <li>Contextual help based on the developer's progress</li>
+                    </ul>
+                </div>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-sync-alt"></i> 2. The Feedback Loop</h4>
+                    <p>Documentation should evolve based on developer experience:</p>
+                    <ul>
+                        <li>"Was this helpful?" buttons on every page</li>
+                        <li>Automatic issue creation from doc feedback</li>
+                        <li>Doc analytics showing where developers struggle</li>
+                        <li>Regular doc reviews based on support tickets</li>
+                    </ul>
+                </div>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-code"></i> 3. The Live Documentation</h4>
+                    <p>Some teams are taking docs further by integrating:</p>
+                    <ul>
+                        <li>Real API status indicators in the docs</li>
+                        <li>Current rate limit usage displays</li>
+                        <li>Interactive debugging consoles</li>
+                        <li>Personalized examples using the developer's own API key</li>
+                    </ul>
+                </div>
+                
+                <h2>Tools of the Trade</h2>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-tools"></i> Building Your Documentation Stack</h4>
+                    <p>Modern API documentation tools:</p>
+                    
+                    <div class="code-block">
+                        <div class="lang">Terminal</div>
+                        <pre><span class="code-comment"># Static Site Generators</span>
+$ npm install @redocly/cli  <span class="code-comment"># Redoc</span>
+$ gem install slate        <span class="code-comment"># Slate</span>
+
+<span class="code-comment"># Interactive API Tools</span>
+$ npm install -g stoplight <span class="code-comment"># Stoplight Studio</span>
+$ npm install swagger-ui   <span class="code-comment"># Swagger UI</span>
+
+<span class="code-comment"># Documentation Platforms</span>
+$ <span class="code-comment"># ReadMe.com, Postman, GitBook</span></pre>
+                    </div>
+                    
+                    <p>The best choice depends on your API complexity, team size, and how much customization you need.</p>
+                </div>
+                
+                <h2>Your Documentation Action Plan</h2>
+                
+                <div class="pattern">
+                    <h4><i class="fas fa-clipboard-list"></i> Practical Steps to Level Up Your Docs</h4>
+                    <p>Start improving today:</p>
+                    
+                    <ul>
+                        <li><strong>Conduct a doc audit:</strong> Find where developers get stuck</li>
+                        <li><strong>Add one interactive example:</strong> Pick your most used endpoint</li>
+                        <li><strong>Create error solutions:</strong> For your top 5 error codes</li>
+                        <li><strong>Set up feedback mechanisms:</strong> Simple "thumbs up/down" on each page</li>
+                        <li><strong>Schedule doc time:</strong> Make documentation part of your sprint cycle</li>
+                    </ul>
+                </div>
+                
+                <div class="dev-tip">
+                    <h5>Final Tip:</h5>
+                    <p>"The best documentation writers are former frustrated developers. They remember what it's like to struggle with bad docs."</p>
+                </div>
+                
+                <div class="references">
+                    <h3>Resources & Tools</h3>
+                    <ul>
+                        <li><strong>Documentation Style Guides:</strong> Google Developer Documentation Style Guide</li>
+                        <li><strong>OpenAPI Specification:</strong> Standard for describing REST APIs</li>
+                        <li><strong>Technical Writing Courses:</strong> Write the Docs community resources</li>
+                        <li><strong>Doc Analytics:</strong> Splitbee, Google Analytics, Hotjar</li>
+                        <li><strong>Accessibility Checkers:</strong> Axe, WAVE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="article-footer">
+            <a href="index.html" class="back-button"><i class="fas fa-code"></i> Back to Articles</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nichole Higgins | All rights reserved</p>
+                <p>Crafted with care for developers everywhere</p>
+                <p>This article represents original work and personal insights</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interactive demo functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const runButton = document.querySelector('.run-button');
+            
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Run button animation
+            if(runButton) {
+                runButton.addEventListener('click', function() {
+                    this.textContent = 'Running...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Run Request';
+                        this.disabled = false;
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

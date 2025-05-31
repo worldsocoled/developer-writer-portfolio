@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Architecture for Scalable Projects | Frontend Engineering</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #343a40;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            font-size: 1.05rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #1a3a5f, #2c5282, #4a6fa5);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 1.8rem;
+        }
+        
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        nav a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .back-button {
+            background: #4299e1;
+            color: white;
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(66, 153, 225, 0.4);
+            font-size: 1.05rem;
+        }
+        
+        .back-button:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(66, 153, 225, 0.5);
+        }
+        
+        .article-header {
+            text-align: center;
+            padding: 5rem 0 3rem;
+            background: linear-gradient(rgba(26, 58, 95, 0.92), rgba(44, 82, 130, 0.88)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" fill="%231a3a5f"/><path d="M0 0L120 120M120 0L0 120" stroke="%234299e1" stroke-width="1.5" opacity="0.3"/></svg>');
+            background-size: 280px;
+            color: white;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .article-header h1 {
+            font-size: 2.9rem;
+            max-width: 850px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.25;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+        
+        .article-subtitle {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+            opacity: 0.92;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 1.8rem;
+            font-size: 1.1rem;
+            opacity: 0.92;
+        }
+        
+        .article-tags {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: rgba(66, 153, 225, 0.22);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(2px);
+        }
+        
+        .article-content {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .article-content h2 {
+            color: #2c5282;
+            margin: 2.8rem 0 1.4rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #4299e1;
+            font-size: 1.9rem;
+        }
+        
+        .article-content h3 {
+            color: #1a3a5f;
+            margin: 2.3rem 0 1.2rem;
+            font-size: 1.5rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.6rem;
+            font-size: 1.12rem;
+            line-height: 1.8;
+        }
+        
+        .article-content blockquote {
+            background: #f1f8ff;
+            border-left: 4px solid #4299e1;
+            padding: 1.8rem;
+            margin: 2.5rem 0;
+            border-radius: 0 10px 10px 0;
+            color: #2c5282;
+            position: relative;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+        
+        .article-content blockquote:before {
+            content: """;
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            font-size: 5rem;
+            color: rgba(66, 153, 225, 0.15);
+            font-family: Georgia, serif;
+        }
+        
+        .article-content .methodology {
+            background: #edf7ff;
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 2.5rem 0;
+            border-left: 4px solid #1a3a5f;
+        }
+        
+        .article-content .methodology h4 {
+            color: #1a3a5f;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin: 1.7rem 0;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+        }
+        
+        .article-content a {
+            color: #4299e1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(66, 153, 225, 0.3);
+        }
+        
+        .article-content a:hover {
+            color: #1a3a5f;
+            border-bottom-color: #1a3a5f;
+        }
+        
+        .code-sample {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.8rem;
+            border-radius: 8px;
+            margin: 2.3rem 0;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        .code-comment {
+            color: #a0aec0;
+        }
+        
+        .code-property {
+            color: #63b3ed;
+        }
+        
+        .code-value {
+            color: #f6ad55;
+        }
+        
+        .code-selector {
+            color: #68d391;
+        }
+        
+        .references {
+            background: #ebf8ff;
+            padding: 2.2rem;
+            border-radius: 12px;
+            margin: 3.5rem 0 1.5rem;
+        }
+        
+        .references h3 {
+            color: #2c5282;
+            margin-top: 0;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #90cdf4;
+        }
+        
+        .references ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .references li {
+            margin-bottom: 1.1rem;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+        
+        .references li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #4299e1;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+        
+        .article-footer {
+            text-align: center;
+            padding: 2.5rem 0;
+        }
+        
+        .article-footer .back-button {
+            font-size: 1.1rem;
+            padding: 13px 28px;
+        }
+        
+        footer {
+            background: #2c5282;
+            color: white;
+            padding: 3.5rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin: 1.2rem 0;
+            opacity: 0.85;
+            line-height: 1.7;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            margin: 1.8rem 0 2.2rem;
+        }
+        
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .social-icon:hover {
+            background: #4299e1;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0.6rem;
+            }
+            
+            .article-header h1 {
+                font-size: 2.3rem;
+                padding: 0 15px;
+            }
+            
+            .article-subtitle {
+                font-size: 1.15rem;
+                padding: 0 15px;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .article-content {
+                padding: 1.8rem;
+            }
+        }
+        
+        /* Animation for key points */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .key-point {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">💻</div>
+                <div>Frontend Engineering</div>
+            </div>
+    </header>
+
+    <div class="article-header">
+        <div class="container">
+            <h1>CSS Architecture for Scalable Projects</h1>
+            <p class="article-subtitle">Advanced methodologies for maintainable styling systems in enterprise applications</p>
+            <div class="article-tags">
+                <span class="tag">CSS Architecture</span>
+                <span class="tag">Scalability</span>
+                <span class="tag">Frontend Engineering</span>
+                <span class="tag">Best Practices</span>
+            </div>
+            <div class="article-meta">
+                <span>Published: June 15, 2023</span>
+                <span>Author: Nichole Higgins</span>
+                <span>Reading Time: 14 min</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="article-content">
+            <p>In the rapidly evolving landscape of frontend development, CSS architecture remains one of the most underestimated yet critical aspects of building sustainable, enterprise-grade applications. As projects scale from modest single-page applications to complex systems with hundreds of components and multiple development teams, traditional styling approaches quickly become unmanageable. This article explores advanced methodologies for creating maintainable, scalable CSS architectures that withstand the test of time and complexity.</p>
+
+            <h2>The Scalability Challenge</h2>
+            <p>Enterprise applications present unique challenges for CSS developers:</p>
+            
+            <ul>
+                <li><strong>Team Scalability:</strong> How do multiple developers work on CSS simultaneously without conflicts?</li>
+                <li><strong>Design Consistency:</strong> How do we maintain visual coherence across thousands of components?</li>
+                <li><strong>Performance:</strong> How do we prevent CSS bundles from becoming monolithic and slow?</li>
+                <li><strong>Maintainability:</strong> How do we refactor safely without breaking unknown dependencies?</li>
+                <li><strong>Theming:</strong> How do we support multiple brands or white-label solutions?</li>
+            </ul>
+            
+            <p>The solution lies in adopting architectural principles traditionally associated with software engineering: modularity, separation of concerns, and strict naming conventions.</p>
+            
+            <h2>Foundational Principles</h2>
+            
+            <div class="methodology">
+                <h4>🏗️ Principle 1: Component-Driven Design</h4>
+                <p>Modern CSS architecture aligns with component-based UI frameworks like React, Vue, and Angular. Each component should own its styles in a self-contained manner, minimizing external dependencies. This approach enables:</p>
+                <ul>
+                    <li>Independent development and testing</li>
+                    <li>Easier code navigation and refactoring</li>
+                    <li>Dead code elimination through tree-shaking</li>
+                    <li>Predictable styling with local scope</li>
+                </ul>
+            </div>
+            
+            <div class="methodology">
+                <h4>🎨 Principle 2: Design Token Abstraction</h4>
+                <p>Design tokens are the atomic building blocks of a design system: color palettes, spacing units, typography scales, and animation curves. By abstracting these values:</p>
+                <ul>
+                    <li>Changes propagate consistently throughout the application</li>
+                    <li>Theming becomes a matter of swapping token sets</li>
+                    <li>Design consistency is enforced at the system level</li>
+                </ul>
+            </div>
+            
+            <div class="methodology">
+                <h4>🔗 Principle 3: Strict Naming Conventions</h4>
+                <p>Consistent naming is the bedrock of maintainable CSS. Adopt methodologies like BEM (Block, Element, Modifier) or SUIT CSS that create self-documenting class names:</p>
+                <div class="code-sample">
+                    <span class="code-comment">/* BEM Example */</span><br>
+                    <span class="code-selector">.card</span> { <span class="code-comment">/* Block */</span><br>
+                    &nbsp;&nbsp;<span class="code-property">padding</span>: <span class="code-value">var(--spacing-md)</span>;<br>
+                    }<br><br>
+                    
+                    <span class="code-selector">.card__header</span> { <span class="code-comment">/* Element */</span><br>
+                    &nbsp;&nbsp;<span class="code-property">border-bottom</span>: <span class="code-value">1px solid var(--border-color)</span>;<br>
+                    }<br><br>
+                    
+                    <span class="code-selector">.card--featured</span> { <span class="code-comment">/* Modifier */</span><br>
+                    &nbsp;&nbsp;<span class="code-property">border</span>: <span class="code-value">2px solid var(--primary)</span>;<br>
+                    }
+                </div>
+            </div>
+            
+            <h2>Advanced Architectural Patterns</h2>
+            
+            <h3>The ITCSS Methodology</h3>
+            <p>Inverted Triangle CSS (ITCSS) organizes stylesheets in layers of increasing specificity:</p>
+            
+            <div class="code-sample">
+                <span class="code-comment">/* Settings: Global variables and config */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'settings/colors'</span>;<br>
+                <span class="code-selector">@import</span> <span class="code-value">'settings/typography'</span>;<br><br>
+                
+                <span class="code-comment">/* Tools: Mixins and functions */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'tools/mixins'</span>;<br><br>
+                
+                <span class="code-comment">/* Generic: Reset and base styles */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'generic/reset'</span>;<br><br>
+                
+                <span class="code-comment">/* Elements: Bare HTML elements */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'elements/headings'</span>;<br>
+                <span class="code-selector">@import</span> <span class="code-value">'elements/buttons'</span>;<br><br>
+                
+                <span class="code-comment">/* Objects: Design patterns */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'objects/grid'</span>;<br><br>
+                
+                <span class="code-comment">/* Components: UI components */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'components/card'</span>;<br>
+                <span class="code-selector">@import</span> <span class="code-value">'components/navigation'</span>;<br><br>
+                
+                <span class="code-comment">/* Utilities: Helper classes */</span><br>
+                <span class="code-selector">@import</span> <span class="code-value">'utilities/display'</span>;<br>
+            </div>
+            
+            <h3>CSS-in-JS for Enterprise Applications</h3>
+            <p>While controversial, CSS-in-JS solutions like Styled Components or Emotion offer compelling benefits for large applications:</p>
+            
+            <ul>
+                <li><strong>Automatic scoping:</strong> Eliminates selector collisions</li>
+                <li><strong>Dynamic styling:</strong> Props-based theming and variants</li>
+                <li><strong>Critical CSS extraction:</strong> Improves performance</li>
+                <li><strong>Co-location:</strong> Styles live with components</li>
+            </ul>
+            
+            <blockquote>
+                "The true test of CSS architecture comes six months into development when new team members can make changes without fear of breaking existing functionality."
+            </blockquote>
+            
+            <h2>Performance Optimization Strategies</h2>
+            
+            <h3>Critical CSS Extraction</h3>
+            <p>For content-heavy applications, extract and inline the minimal CSS required for above-the-fold content:</p>
+            
+            <div class="code-sample">
+                <span class="code-comment">/* Webpack configuration example */</span><br>
+                <span class="code-selector">const</span> <span class="code-property">CriticalCssPlugin</span> = <span class="code-value">require('critical-css-webpack-plugin')</span>;<br><br>
+                
+                <span class="code-selector">module</span>.<span class="code-property">exports</span> = {<br>
+                &nbsp;&nbsp;<span class="code-property">plugins</span>: [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-selector">new</span> <span class="code-property">CriticalCssPlugin</span>({<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">base</span>: <span class="code-value">'dist/'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">src</span>: <span class="code-value">'index.html'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">dest</span>: <span class="code-value">'index.html'</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">width</span>: <span class="code-value">1300</span>,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">height</span>: <span class="code-value">900</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;})<br>
+                &nbsp;&nbsp;]<br>
+                };
+            </div>
+            
+            <h3>CSS Auditing Tools</h3>
+            <p>Regularly analyze your CSS with tools like:</p>
+            <ul>
+                <li><strong>PurgeCSS:</strong> Removes unused styles</li>
+                <li><strong>CSS Stats:</strong> Visualizes complexity metrics</li>
+                <li><strong>Chrome Coverage Tool:</strong> Identifies unused CSS on pages</li>
+                <li><strong>Bundle Analyzer:</strong> Visualizes CSS bundle composition</li>
+            </ul>
+            
+            <h2>Case Study: Financial Dashboard Migration</h2>
+            
+            <div class="methodology">
+                <h4>🏦 The Challenge</h4>
+                <p>A major financial institution needed to migrate their legacy trading dashboard (built with Sass and jQuery) to a modern React-based architecture. The existing CSS had:</p>
+                <ul>
+                    <li>Over 15,000 lines of unstructured Sass</li>
+                    <li>Global scope conflicts causing UI inconsistencies</li>
+                    <li>No documentation or design system</li>
+                    <li>Multiple z-index wars with values exceeding 9999</li>
+                </ul>
+            </div>
+            
+            <div class="methodology">
+                <h4>🛠️ The Solution</h4>
+                <p>The team implemented a phased approach:</p>
+                <ol>
+                    <li>Created design tokens for all visual properties</li>
+                    <li>Adopted ITCSS architecture for new components</li>
+                    <li>Implemented CSS Modules for local scoping</li>
+                    <li>Created utility classes for common patterns</li>
+                    <li>Gradual refactoring with visual regression testing</li>
+                </ol>
+            </div>
+            
+            <div class="methodology">
+                <h4>📈 The Results</h4>
+                <p>After 9 months:</p>
+                <ul>
+                    <li>CSS reduced by 62% (15,000 → 5,700 lines)</li>
+                    <li>90% reduction in styling-related bugs</li>
+                    <li>New feature development accelerated by 40%</li>
+                    <li>Onboarding time for new developers cut in half</li>
+                </ul>
+            </div>
+            
+            <h2>The Future: CSS Layers and Container Queries</h2>
+            
+            <p>Emerging CSS features promise to revolutionize architecture:</p>
+            
+            <div class="methodology">
+                <h4>🎚️ CSS Cascade Layers</h4>
+                <p>The new <code>@layer</code> rule enables explicit control over the cascade:</p>
+                <div class="code-sample">
+                    <span class="code-selector">@layer</span> <span class="code-property">base</span>, <span class="code-property">components</span>, <span class="code-property">utilities</span>;<br><br>
+                    
+                    <span class="code-selector">@layer</span> <span class="code-property">utilities</span> {<br>
+                    &nbsp;&nbsp;<span class="code-selector">.m-4</span> { <span class="code-property">margin</span>: <span class="code-value">1rem</span>; }<br>
+                    }<br><br>
+                    
+                    <span class="code-selector">@layer</span> <span class="code-property">components</span> {<br>
+                    &nbsp;&nbsp;<span class="code-selector">.card</span> { <span class="code-property">margin</span>: <span class="code-value">2rem</span>; }<br>
+                    }<br>
+                </div>
+                <p>Layers defined later in the document have lower priority than earlier layers, regardless of specificity.</p>
+            </div>
+            
+            <div class="methodology">
+                <h4>📦 CSS Container Queries</h4>
+                <p>Container queries enable components to adapt based on their own dimensions rather than the viewport:</p>
+                <div class="code-sample">
+                    <span class="code-selector">.card-container</span> {<br>
+                    &nbsp;&nbsp;<span class="code-property">container-type</span>: <span class="code-value">inline-size</span>;<br>
+                    }<br><br>
+                    
+                    <span class="code-selector">@container</span> (<span class="code-property">min-width</span>: <span class="code-value">400px</span>) {<br>
+                    &nbsp;&nbsp;<span class="code-selector">.card</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">display</span>: <span class="code-value">flex</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br>
+                </div>
+                <p>This allows truly self-contained responsive components.</p>
+            </div>
+            
+            <h2>Conclusion: Sustainable Styling Systems</h2>
+            
+            <p>Effective CSS architecture is less about chasing the latest framework and more about establishing foundational principles that stand the test of time:</p>
+            
+            <ul>
+                <li><strong>Establish clear conventions early:</strong> Naming, structure, and patterns</li>
+                <li><strong>Design with change in mind:</strong> Assume everything will need updating</li>
+                <li><strong>Measure constantly:</strong> Track CSS performance metrics</li>
+                <li><strong>Document relentlessly:</strong> Create living style guides</li>
+                <li><strong>Embrace progressive enhancement:</strong> Use modern features with fallbacks</li>
+            </ul>
+            
+            <p>The most successful CSS architectures are those that enable teams to move quickly without accumulating technical debt. By treating CSS as a first-class engineering concern rather than an afterthought, organizations can build styling systems that scale gracefully alongside their applications.</p>
+            
+            <div class="references">
+                <h3>References & Resources</h3>
+                <ul>
+                    <li><strong>ITCSS Methodology:</strong> Harry Roberts' original article on Inverted Triangle CSS architecture</li>
+                    <li><strong>Design Tokens Specification:</strong> W3C Design Tokens Community Group documentation</li>
+                    <li><strong>CSS for Software Engineers:</strong> CSS architecture patterns for complex applications</li>
+                    <li><strong>State of CSS Survey:</strong> Annual survey results on CSS usage and methodologies</li>
+                    <li><strong>CSSWG Specifications:</strong> Official documentation for CSS Cascade Layers and Container Queries</li>
+                    <li><strong>Enterprise CSS Case Studies:</strong> Airbnb, Shopify, and Microsoft design system implementations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="article-footer">
+            <a href="index.html" class="back-button">← Back to All Articles</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Frontend Engineering Insights</h3>
+            <p>Exploring advanced techniques for building scalable, maintainable user interfaces</p>
+            
+            <p>© 2025 Frontend Engineering Insights. Nichole Higgins -  All rights reserved.</p>
+            <p>Content may be shared with attribution and link back to original source</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation for key points
+        document.addEventListener('DOMContentLoaded', function() {
+            const keyPoints = document.querySelectorAll('.methodology');
+            keyPoints.forEach((point, index) => {
+                point.style.opacity = '0';
+                point.classList.add('key-point');
+                
+                setTimeout(() => {
+                    point.style.animation = `fadeIn 0.5s ease-out ${index * 0.15}s forwards`;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
